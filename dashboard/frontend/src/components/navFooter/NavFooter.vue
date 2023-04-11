@@ -8,6 +8,7 @@
 import { defineComponent } from "vue";
 // es6
 export default defineComponent({
+  name: "NavFooter",
   props: {},
   //   定义子组件
   components: {},

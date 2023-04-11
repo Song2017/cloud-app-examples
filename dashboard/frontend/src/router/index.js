@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import ToolView from "../views/ToolView";
 
+// 路由path必须以/开头, name不能重复
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: HomeView,
   },
@@ -16,10 +18,25 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/",
+    name: "index",
+    component: ToolView,
+  },
+  {
+    path: "/tool",
+    name: "tool",
+    component: ToolView,
+  },
+  {
+    path: "/redis",
+    name: "redis",
+    component: ()=> import('../views/DockerRedisView'),
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory("ui"), //"process.env.BASE_URL"
   routes,
 });
 
