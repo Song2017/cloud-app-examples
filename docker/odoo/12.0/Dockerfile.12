@@ -1,0 +1,11 @@
+FROM odoo:12.0
+LABEL maintainer="Ben Song<bensong2017@hotmail.com>"
+
+COPY ./entrypoint.sh /
+COPY ./odoo.conf /etc/odoo/
+# RUN chown odoo /etc/odoo/odoo.conf
+
+USER odoo
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["odoo"]
