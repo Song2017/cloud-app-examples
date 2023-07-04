@@ -20,7 +20,7 @@ helm repo list
 helm search repo redis
 helm show readme bitnami/redis
 
-## 安装
+## 安装app
 https://blog.csdn.net/rockstics/article/details/115768003
 helm pull bitnami/redis
 
