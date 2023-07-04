@@ -64,3 +64,8 @@ sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 ran
 k3s kubectl -n kubernetes-dashboard create token admin-user
 ### file permission
 sudo chown -R 1001:1001 redis-data/
+
+## DB App install step
+1. create PV and PVC
+2. helm install app
+3. expose app service

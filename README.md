@@ -1,6 +1,11 @@
-# cloud app yaml scripts
+# cloud app examples
+Some docker, docker compose and Kubernetes helm examples.
+
 ## Dockerfile
-- /docker
+- [docker](./docker/)
 ## K8s/K3s yaml
-- /k3s
-- /k8s
+helm value demo files
+- k8s dashboard
+- k8s helm
+- postgresql
+- redis
