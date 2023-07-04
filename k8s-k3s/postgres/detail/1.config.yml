@@ -2,11 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
-  namespace: default
+  namespace: db
   labels:
     app: postgres
 data:
   POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: '123456'
+  POSTGRES_PASSWORD: 'pg123456'
   POSTGRES_DB: postgres
-

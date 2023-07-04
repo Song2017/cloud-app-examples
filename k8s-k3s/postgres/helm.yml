@@ -1,0 +1,54 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+global:
+  postgresql:
+    auth:
+      ## @param global.postgresql.auth.postgresPassword Password for the "postgres" admin user (overrides `auth.postgresPassword`)
+      postgresPassword: "pp123"
+      username: "pgadmin"
+      password: "admin123"
+      database: "postgres"
+    # service:
+    #   nodePorts:
+    #     postgresql: 30011
+
+image:
+  registry: docker.io
+  repository: bitnami/postgresql
+  tag: 15.3.0-debian-11-r17
+  digest: ""
+  pullPolicy: IfNotPresent
+  pullSecrets: []
+  debug: false
+
+## @param architecture PostgreSQL architecture (`standalone` or `replication`)
+architecture: standalone
+primary:
+  name: primary
+  # existingConfigmap: "pg-configmap"
+  persistence:
+    enabled: true
+    existingClaim: "postgres-pv-claim"
+    selector:
+      matchLabels:
+        app: postgres-standalone
+  # service:
+  #   type: ClusterIP
+  #   ports:
+  #     postgresql: 5432
+    ## NOTE: choose port between <30000-32767>
+    ## @param primary.service.nodePorts.postgresql Node port for PostgreSQL
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+    ##
+    # nodePorts:
+    #   postgresql: 30011
+    
+volumePermissions:
+  enabled: true
+
+# readReplicas:
+#   ## @param readReplicas.name Name of the read replicas database (eg secondary, slave, ...)
+#   ##
+#   name: read
+#   ## @param readReplicas.replicaCount Number of PostgreSQL read only replicas
+#   ##
+#   replicaCount: 1

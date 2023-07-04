@@ -25,3 +25,5 @@ https://blog.csdn.net/rockstics/article/details/115768003
 helm pull bitnami/redis
 
 helm upgrade -i redis bitnami/redis -n db -f helm_values.yml
+
+helm uninstall redis -n db

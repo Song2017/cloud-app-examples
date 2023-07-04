@@ -58,3 +58,9 @@ https://www.rancher.cn/quick-start/
 ```
 sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 rancher/rancher:stable
 ```
+
+## common issues
+### dashboard
+k3s kubectl -n kubernetes-dashboard create token admin-user
+### file permission
+sudo chown -R 1001:1001 redis-data/
