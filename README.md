@@ -1,5 +1,5 @@
 # cloud app examples
-Some docker, docker compose and Kubernetes helm examples.
+Some Kubernetes helm examples and docker, docker compose files.
 
 ## Dockerfile
 - [docker](./docker/)
