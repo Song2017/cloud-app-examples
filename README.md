@@ -1,6 +1,6 @@
 # cloud app yaml scripts
 ## Dockerfile
-/
+- /docker
 ## K8s/K3s yaml
-
-## local WebUI
+- /k3s
+- /k8s

@@ -4,6 +4,7 @@ metadata:
   name: postgres
   namespace: default
   labels:
+  labels:
     app: postgres
 spec:
   ports:

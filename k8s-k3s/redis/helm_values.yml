@@ -1,0 +1,23 @@
+image:
+  registry: docker.io
+  repository: bitnami/redis
+  tag: 7.0.11-debian-11-r26
+  pullPolicy: IfNotPresent
+architecture: standalone
+auth: 
+  enabled: true
+  # Redis password (randomly generated if not set)        
+  password: redis123
+## @param commonConfiguration [string] Common configuration to be added into the ConfigMap
+## ref: https://redis.io/topics/config
+##
+commonConfiguration: |-
+  # Enable AOF https://redis.io/topics/persistence#append-only-file
+  appendonly no
+  # Disable RDB persistence, AOF persistence already enabled.
+  # save ""
+      
+master:
+  count: 1
+  persistence:
+    existingClaim: redis-pv-claim
