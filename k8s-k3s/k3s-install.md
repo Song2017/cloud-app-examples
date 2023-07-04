@@ -66,6 +66,6 @@ k3s kubectl -n kubernetes-dashboard create token admin-user
 sudo chown -R 1001:1001 redis-data/
 
 ## DB App install step
-1. create PV and PVC
+1. create PV and PVC: pre.yml
 2. helm install app
 3. expose app service
