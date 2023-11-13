@@ -52,3 +52,11 @@ logging:
 ```
 
 [reference](https://github.com/khezen/compose-postgres/pull/23/files)
+
+
+## local 
+```
+     docker run -itd --restart always -p 9002:5432 --volume pgvolume:/var/lib/postgresql -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=user -e POSTGRES_DB=app -e POSTGRES_HOST_AUTH_METHOD=trust postgres:13.0-alpine
+
+     docker run -itd --restart always -p 9002:9002 -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=user -e POSTGRES_DB=app -e POSTGRES_HOST_AUTH_METHOD=trust postgres:15     
+```
