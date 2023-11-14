@@ -59,7 +59,7 @@ x-airflow-common:
     # For backward compatibility, with Airflow <2.3
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://user:ad***@120.46.78.11:30012/airflow
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://user:ad***@120.46.78.11:30012/airflow
-    AIRFLOW__CELERY__BROKER_URL: redis://re****:@120.46.78.11:31000/1
+    AIRFLOW__CELERY__BROKER_URL: redis://:re****@120.46.78.11:31000/1
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'

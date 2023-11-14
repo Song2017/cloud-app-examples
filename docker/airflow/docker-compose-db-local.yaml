@@ -55,11 +55,11 @@ x-airflow-common:
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://user:admin123@10.43.182.89:30012/airflow
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://user:admin***@120.46.11.11:30012/airflow
     # For backward compatibility, with Airflow <2.3
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://user:admin123@10.43.182.89:30012/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://user:admin123@10.43.182.89:30012/airflow
-    AIRFLOW__CELERY__BROKER_URL: redis://redis123@10.43.230.125:31779/1
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://user:admin***@120.46.11.11:30012/airflow
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://user:admin***@120.46.11.11:30012/airflow
+    AIRFLOW__CELERY__BROKER_URL: redis://:redis***@120.46.11.11:31779/1
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
@@ -278,21 +278,21 @@ services:
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
   # See: https://docs.docker.com/compose/profiles/
-  flower:
-    <<: *airflow-common
-    command: celery flower
-    profiles:
-      - flower
-    ports:
-      - "5555:5555"
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 30s
-    restart: always
-    depends_on:
-      # <<: *airflow-common-depends-on
-      airflow-init:
-        condition: service_completed_successfullyS
+  # flower:
+  #   <<: *airflow-common
+  #   command: celery flower
+  #   profiles:
+  #     - flower
+  #   ports:
+  #     - "5555:5555"
+  #   healthcheck:
+  #     test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #     start_period: 30s
+  #   restart: always
+  #   depends_on:
+  #     # <<: *airflow-common-depends-on
+  #     airflow-init:
+  #       condition: service_completed_successfullyS

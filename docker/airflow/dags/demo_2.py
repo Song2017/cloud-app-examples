@@ -8,7 +8,7 @@ from airflow import DAG
 # Operators; we need this to operate!
 from airflow.operators.bash import BashOperator
 with DAG(
-    "demo_ben_tutorial",
+    "demo_ben",
     # These args will get passed on to each operator
     # You can override them on a per-task basis during operator initialization
     default_args={
@@ -31,9 +31,9 @@ with DAG(
         # 'sla_miss_callback': yet_another_function, # or list of functions
         # 'trigger_rule': 'all_success'
     },
-    description="A simple tutorial DAG",
+    description="A simple demo DAG",
     schedule=timedelta(days=1),
-    start_date=datetime(2021, 1, 1),
+    start_date=datetime(2023, 1, 1),
     catchup=False,
     tags=["example"],
 ) as dag:
