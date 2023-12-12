@@ -1,0 +1,11 @@
+FROM ubuntu:20.04
+
+RUN set -x; \
+        apk add terraform --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
+        # for gitlab base image
+        && apk add bash \ 
+        && rm -rf /var/cache/apk/*
+
+COPY ./alicloud.terraformrc /root
+COPY ./.profile /root
+COPY ./.bashrc /root

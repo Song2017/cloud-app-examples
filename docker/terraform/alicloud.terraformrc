@@ -1,0 +1,15 @@
+provider_installation {
+  network_mirror {
+    url = "https://mirrors.aliyun.com/terraform/"
+    // 限制只有阿里云相关 Provider 从国内镜像源下载
+    include = ["registry.terraform.io/aliyun/alicloud", 
+               "registry.terraform.io/hashicorp/alicloud",
+              ]   
+  }
+  direct {
+    // 声明除了阿里云相关Provider, 其它Provider保持原有的下载链路
+    exclude = ["registry.terraform.io/aliyun/alicloud", 
+               "registry.terraform.io/hashicorp/alicloud",
+              ]  
+  }
+}
