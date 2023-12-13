@@ -1,5 +1,6 @@
 # cloud app examples
-Some Kubernetes helm examples and docker, docker compose files.
+Apps with a docker file, docker compose or Kubernetes helm.
+Contained apps are a good way to run and manage on different operating systems.
 
 ## Dockerfile
 - [docker](./docker/)
