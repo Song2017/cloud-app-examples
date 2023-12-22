@@ -1,4 +1,10 @@
-1. introduce
+1. Quick start
+- build image
+- dbt guides
+https://docs.getdbt.com/guides/manual-install?step=8
+postgres-setup: https://docs.getdbt.com/docs/core/connect-data-platform/postgres-setup
+
+1. DBT(data build tool) introduce - T(ETL)
 ```
 dbt（data build tool）是一个开源的数据转换工具，专门用于数据仓库的建模和转换。与传统的ETL工具不同，dbt专注于数据转换和建模部分，而不涉及数据抽取（Extract）和加载（Load）过程。它与现有的数据仓库（如Snowflake、BigQuery、Redshift等）紧密集成，使用SQL来定义转换和模型，使数据工程师能够更轻松地构建、测试和部署数据模型。
 

@@ -1,0 +1,5 @@
+dbt-core==1.6.2
+dbt-extractor==0.4.1
+dbt-metabase==0.9.15
+dbt-postgres==1.6.2
+dbt-semantic-interfaces==0.2.0
