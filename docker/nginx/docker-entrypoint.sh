@@ -1,14 +1,19 @@
 #!/bin/sh
-# docker run -dt -p 8080:8080 songgs/jd
+# docker run -dt --restart=always -p 8080:8080 songgs/jd
+# https://www.nginx.com/resources/wiki/start/topics/examples/full/
 set -e
-echo '
+echo '''
+error_log  logs/error.log;
+
 server {
     listen       8080;
     listen  [::]:8080;
     server_name  localhost;
 
-    access_log  /var/log/nginx/host.access.log  main;
-
+    log_format   main '$remote_addr - $remote_user [$time_local]  $status '
+        '"$request" $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log   logs/access.log  main;
 
     location /index {
         root   /usr/share/nginx/html;
@@ -50,6 +55,6 @@ server {
     #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
     #    include        fastcgi_params;
     #}
-} ' >> /etc/nginx/conf.d/app.conf
+} ''' >> /etc/nginx/conf.d/app.conf
 
 exec "$@"

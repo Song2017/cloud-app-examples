@@ -5,5 +5,5 @@ COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 
 EXPOSE 8080
 
-ENTRYPOINT ["/app/docker-entrypoint.sh"]
+# ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
