@@ -15,11 +15,12 @@ cd $WORK_DIR/repo
 echo "dockerfile $WORK_DIR/$DOCKER_DIR/$DOCKER_FILE, image $DOCKER_IMAGE, --username=$DOCKER_REGISTRY_NAME $DOCKER_REGISTRY"
 # Build the image using Kaniko
 # docker login --username=$DOCKER_REGISTRY_NAME -p $DOCKER_REGISTRY_PASS $DOCKER_REGISTRY
+auth=$(echo -n "$DOCKER_REGISTRY_NAME:$DOCKER_REGISTRY_PASS" | base64)
 cat <<EOF > /kaniko/.docker/config.json
 {
   "auths": {
     "$DOCKER_REGISTRY": {
-      "auth": "$(echo -n '$DOCKER_REGISTRY_NAME:$DOCKER_REGISTRY_PASS' | base64)"
+      "auth": "$auth"
     }
   }
 }

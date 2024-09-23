@@ -1,7 +1,14 @@
+import threading
+
 from flask import Flask, request, jsonify
 import subprocess
 
 app = Flask(__name__)
+
+
+def run_script(repo_url, branch):
+    subprocess.run(['bash', 'webhook.sh', repo_url, branch])
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -10,16 +17,12 @@ def webhook():
         repo_url = data['repository']['clone_url']
         branch = data['ref'].split('/')[-1]
         print(repo_url, branch)
-        subprocess.run(['bash', 'webhook.sh', repo_url, branch])
+        # subprocess.run(['bash', 'webhook.sh', repo_url, branch])
+        # 在单独的线程中运行脚本
+        thread = threading.Thread(target=run_script, args=(repo_url, branch))
+        thread.start()
         return jsonify({'status': 'success'}), 200
 
-@app.route('/webhook', methods=['GET'])
-def get_webhook():
-    return "webhook"
-
-@app.route('/', methods=['GET'])
-def get_root():
-    return "root"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
