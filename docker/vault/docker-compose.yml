@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  # postgres:
+  #   image: postgres:latest
+  #   container_name: vault-postgres
+  #   environment:
+  #     POSTGRES_USER: vault
+  #     POSTGRES_PASSWORD: vaultpassword
+  #     POSTGRES_DB: vault
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   networks:
+  #     - vault-net
+
+  vault:
+    image: vault:latest
+    container_name: vault
+    environment:
+      VAULT_ADDR: http://0.0.0.0:8200
+      VAULT_API_ADDR: http://0.0.0.0:8200
+      VAULT_UI: 'true'
+    command:
+      - "server"
+    restart: always
+    volumes:
+      - vault_data:/vault/file
+      - ./vault_config:/vault/config
+    ports:
+      - '8200:8200'
+    cap_add:
+      - IPC_LOCK
+    # networks:
+    #   - vault-net
+    # depends_on:
+    #   - postgres
+
+volumes:
+  # postgres_data:
+  vault_data:
+
+# networks:
+#   vault-net:
