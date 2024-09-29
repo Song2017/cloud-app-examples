@@ -8,7 +8,7 @@ RUN apt-get update \
     && apt-get install -y git curl
 
 # Install Flask
-RUN pip install Flask
+RUN pip install Flask requests
 
 # Copy Kaniko executor
 # COPY --from=gcr.io/kaniko-project/executor:latest /kaniko /kaniko
