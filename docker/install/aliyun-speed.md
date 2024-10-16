@@ -7,9 +7,13 @@ https://cr.console.aliyun.com/cn-beijing/instances/mirrors
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://d2tuf8g1.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://asd.mirror.aliyuncs.com"]
 }
 EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
+## Aliyun Ubunutu 加速器
+sed -i "s@http://deb.debian.org@https://mirrors.aliyun.com@g" /etc/apt/sources.list
+sed -i "s@http://security.debian.org@http://mirrors.aliyun.com@g" /etc/apt/sources.list
