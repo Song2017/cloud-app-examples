@@ -1,6 +1,7 @@
 ## Install
 
 国内 https://docs.k3s.io/zh/quick-start
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -
 ```
 OS Ubuntu 22.0
 防火墙
