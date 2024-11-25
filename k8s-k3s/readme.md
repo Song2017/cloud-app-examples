@@ -1,7 +1,18 @@
 ## Install
-
 国内 https://docs.k3s.io/zh/quick-start
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh -
+```shell
+curl -sfL https://get.k3s.io | sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--tls-san x.x.x.x" sh -s -
+curl -sfL https://get.k3s.io | sh -s - --tls-san 47.96.1.60 --pause-image=registry.cn-shanghai.aliyuncs.com/nsmi/rancher-mirrored-pause:3.6
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh - 
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_SKIP_SELINUX_RPM=true sh  -
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn sh - --tls-san 47.96.1.60 --pause-image=registry.cn-shanghai.aliyuncs.com/nsmi/rancher-mirrored-pause:3.6 
+
+echo $K3S_CONFIG_FILE
+ls /etc/rancher/k3s
+cat /etc/rancher/k3s/k3s.yaml
+```
+
 ```
 OS Ubuntu 22.0
 防火墙
@@ -65,8 +76,15 @@ sudo docker run --privileged -d --restart=unless-stopped -p 80:80 -p 443:443 ran
 k3s kubectl -n kubernetes-dashboard create token admin-user
 ### file permission
 sudo chown -R 1001:1001 redis-data/
+### failed to pull and unpack image "docker.io/rancher/mirrored-pause:3.6"
+sudo nano /etc/systemd/system/k3s.service
+ExecStart=/usr/local/bin/k3s server --pause-image=registry.cn-shanghai.aliyuncs.com/nsmi/rancher-mirrored-pause:3.6 --disable-https
+sudo systemctl daemon-reload
+sudo systemctl restart k3s
+### nothing provides container-selinux >= 3:2.191.0-1 needed by k3s-selinux-1.6-1.el9.noarch from rancher-k3s-common-stable
+INSTALL_K3S_SELINUX_WARN=true
 
 ## DB App install step
 1. create PV and PVC: pre.yml
 2. helm install app
-3. expose app service
+3. expose app service 
