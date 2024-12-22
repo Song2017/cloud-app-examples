@@ -29,12 +29,13 @@ syslog-ident redis
     docker run -d -p 6379:6379 -v <data-dir>:/data --name redis songgs/redis
 
 #### Run `redis-server` with persistent data directory and password.
-
-    docker run -d -p 6379:6379 -v <data-dir>:/data --name redis songgs/redis redis-server /etc/redis/redis.conf --requirepass <password>
+docker run --restart=always -dt -p 6379:6379 -v /root/redis:/home --name redis  crpi-ql917lqri2ngyv0e.cn-shanghai.personal.cr.aliyuncs.com/pub_2024/redis:7.4 redis-server /home/redis.conf --requirepass pass1234
 
 #### Run `redis-cli`
 
     docker run -it --rm --link redis:redis songgs/redis bash -c 'redis-cli -h redis'
+
+    ACL setUSER admin01 on >Admin0727
 
 ### Refer
 - https://github.com/dockerfile/redis/blob/master/README.md
