@@ -7,9 +7,18 @@ https://cr.console.aliyun.com/cn-beijing/instances/mirrors
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://asd.mirror.aliyuncs.com"]
+  "registry-mirrors": [
+    "https://docker.linkedbus.com",
+    "https://docker.xuanyuan.me",
+    "https://d2tuf8g1.mirror.aliyuncs.com"
+  ],
+  "log-opts": {
+    "max-file": "3",
+    "max-size": "50m"
+  }
 }
 EOF
+dockerd --validate --config-file=/etc/docker/daemon.json
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```

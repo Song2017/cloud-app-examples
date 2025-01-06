@@ -31,6 +31,8 @@ syslog-ident redis
 #### Run `redis-server` with persistent data directory and password.
 docker run --restart=always -dt -p 6379:6379 -v /root/redis:/home --name redis  crpi-ql917lqri2ngyv0e.cn-shanghai.personal.cr.aliyuncs.com/pub_2024/redis:7.4 redis-server /home/redis.conf --requirepass pass1234
 
+registry.cn-shanghai.aliyuncs.com/nsmi/redis:7.0.15-alpine
+
 #### Run `redis-cli`
 
     docker run -it --rm --link redis:redis songgs/redis bash -c 'redis-cli -h redis'
