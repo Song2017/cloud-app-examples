@@ -8,6 +8,11 @@ sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": [
+    "https://registry.docker-cn.com",
+    "https://docker.mirrors.ustc.edu.cn",
+    "https://hub-mirror.c.163.com",
+    "https://mirror.baidubce.com",
+    "https://txinr6uz.mirror.aliyuncs.com",
     "https://docker.linkedbus.com",
     "https://docker.xuanyuan.me",
     "https://d2tuf8g1.mirror.aliyuncs.com"
