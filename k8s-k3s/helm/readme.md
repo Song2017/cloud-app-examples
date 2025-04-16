@@ -1,7 +1,10 @@
 ## k3s
 https://docs.k3s.io/zh/cluster-access
-需要先安装helm3
+
 ```
+需要先安装helm3
+curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | sudo bash
+
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 kubectl get pods --all-namespaces
 helm ls --all-namespaces

@@ -58,5 +58,15 @@ logging:
 ```
      docker run -itd --restart always -p 9002:5432 --volume pgvolume:/var/lib/postgresql -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=user -e POSTGRES_DB=app -e POSTGRES_HOST_AUTH_METHOD=trust postgres:13.0-alpine
 
-     docker run -itd --restart always -p 9002:9002 -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=user -e POSTGRES_DB=app -e POSTGRES_HOST_AUTH_METHOD=trust postgres:15     
+docker run -it -p 9002:5432 -v /var/lib/postgresql/data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=admin123 -e POSTGRES_USER=user -e POSTGRES_DB=app -e POSTGRES_HOST_AUTH_METHOD=trust registry.cn-shanghai.aliyuncs.com/nsmi/postgres:15.12-bookworm    
+
+docker run  -it  -p 9002:5432 -e POSTGRES_PASSWORD=mypassword  registry.cn-shanghai.aliyuncs.com/nsmi/postgres:15.12-bookworm  
+The default postgres user and database are created in the entrypoint with initdb.
+docker run -it --rm --network some-network postgres psql -h some-postgres -U postgres
+
+docker run -it  -e POSTGRES_PASSWORD=mypass -e POSTGRES_USER=myuser -e POSTGRES_DB=mydatabase -p 9002:5432 -v ./:/var/lib/postgresql/data registry.cn-shanghai.aliyuncs.com/nsmi/postgres:15.12-bookworm  
 ```
+netstat -tlnp | awk '/:5432 */ {print}'
+
+
+pg_dump -U user -h 139.0.0.0 -p 9002 -f ./mydb.sql mydb

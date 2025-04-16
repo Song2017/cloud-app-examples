@@ -3,6 +3,8 @@
 # prepare config, service, pv
 kubectl apply -f pre.yml
 
+helm repo add bitnami https://charts.bitnami.com/bitnami  # 推荐（Bitnami 提供高质量 Chart）
+helm repo add stable https://charts.helm.sh/stable   
 helm search repo postgresql
 helm pull bitnami/postgresql
 helm upgrade -i pg bitnami/postgresql -n db -f helm_values.yml
