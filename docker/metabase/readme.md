@@ -4,10 +4,10 @@ docker pull metabase/metabase:v0.47.9
 ```
 docker run -it -p 3000:3000 \
   -e "MB_DB_TYPE=postgres" \
-  -e "MB_DB_DBNAME=template1" \
-  -e "MB_DB_PORT=30012" \
-  -e "MB_DB_USER=user" \
-  -e "MB_DB_PASS=admin123" \
-  -e "MB_DB_HOST=120.1.1.1" \
-   --name metabase metabase/metabase:v0.47.9
+  -e "MB_DB_DBNAME=metabase" \
+  -e "MB_DB_PORT=9002" \
+  -e "MB_DB_USER=metabase" \
+  -e "MB_DB_PASS=metabase123" \
+  -e "MB_DB_HOST=139.1.1.1" \
+  metabase/metabase:v0.53.11.3
 ```

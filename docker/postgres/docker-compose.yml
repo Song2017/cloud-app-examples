@@ -3,7 +3,7 @@ version: '3.5'
 services:
   postgres:
     container_name: postgres_db
-    image: postgres:12
+    image: registry.cn-shanghai.aliyuncs.com/nsmi/postgres:15.12-bookworm
     # environment:
     #   POSTGRES_USER: ${POSTGRES_USER:-postgres}
     #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
@@ -13,7 +13,7 @@ services:
     volumes:
        - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "9002:5432"
     networks:
       - postgres
     restart: unless-stopped
