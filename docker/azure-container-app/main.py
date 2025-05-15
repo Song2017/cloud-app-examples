@@ -73,8 +73,6 @@ def before_request():
     """记录请求开始时间和其他基本信息"""
     request.start_time = time.time()  # 存储请求开始时间到 request 对象
     logging.info(f"Request started: {request.method} {request.url} {str(vars(request))}")
-    if request.method == "POST":
-        logging.info(f"Request POST: {request.get_json()}")
 
 
 @app.after_request
@@ -98,7 +96,7 @@ def handle_event():
 def root():
     # https://learn.microsoft.com/zh-cn/azure/event-grid/end-point-validation-cloud-events-schema
     if request.method == 'OPTIONS':
-        response = make_response('', 200)
+        response = make_response('empty', 200)
         response.headers["WebHook-Allowed-Origin"] = "*"
         return response
 
