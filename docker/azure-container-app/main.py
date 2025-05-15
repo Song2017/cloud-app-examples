@@ -119,7 +119,7 @@ def require_api_key(f):
     def decorated(*args, **kwargs):
         api_key = request.args.get('api-key')
 
-        if not api_key or api_key != os.getenv('api-key'):
+        if not api_key or api_key != os.getenv('api_key'):
             return jsonify(error="Invalid or missing API key"), 401
 
         return f(*args, **kwargs)
@@ -129,11 +129,13 @@ def require_api_key(f):
 
 def send_message(json_body: dict = None):
     # "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=**"
-    url = os.getenv('wecom_webhook')
-    json_body = json_body or wecom_template
-    response = requests.request("POST", url, json=json_body)
-    print(response.text)
-    return response
+    try:
+        url = os.getenv('wecom_webhook')
+        json_body = json_body or wecom_template
+        response = requests.request("POST", url, json=json_body)
+        logging.info(f"send_message response: {response.status_code}, {response.text}")
+    except Exception as e:
+        logging.error(f"send_message error: {str(e)}")
 
 
 if __name__ == '__main__':
