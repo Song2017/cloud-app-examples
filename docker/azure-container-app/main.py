@@ -101,7 +101,7 @@ def root():
         return response
 
     event_data = request.get_json()
-    print("Received Event:", str(event_data), str(request.headers))
+    logging.info(f"root message {event_data}, {os.getenv('wecom_webhook')}")
     return_data = {"root page": "yes"}
     for data in event_data:
         if isinstance(data, dict) and data.get(
@@ -117,7 +117,7 @@ def root():
 def require_api_key(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        api_key = request.args.get('api-key')
+        api_key = request.args.get('key')
 
         if not api_key or api_key != os.getenv('api_key'):
             return jsonify(error="Invalid or missing API key"), 401
@@ -130,6 +130,7 @@ def require_api_key(f):
 def send_message(json_body: dict = None):
     # "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=**"
     try:
+        logging.info(f"send_message start: {json_body}")
         url = os.getenv('wecom_webhook')
         json_body = json_body or wecom_template
         response = requests.request("POST", url, json=json_body)
