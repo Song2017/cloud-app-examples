@@ -101,14 +101,11 @@ def root():
         return response
 
     event_data = request.get_json()
-    logging.info(f"root message {event_data}, {os.getenv('wecom_webhook')}")
-    return_data = {"root page": "yes"}
-    for data in event_data:
-        if isinstance(data, dict) and data.get(
-                "eventType") == "Microsoft.EventGrid.SubscriptionValidationEvent":
-            return_data["ValidationResponse"] = data.get(
-                "data").get("validationCode")
-            send_message()
+    logging.info(f"root message {event_data}")
+    return_data = {"msg": "success"}
+    if isinstance(event_data, dict) and event_data.get(
+            "send_message") is True:
+        send_message()
     resp = make_response(jsonify(return_data), 200)
     resp.headers["WebHook-Allowed-Origin"] = "*"
     return resp
