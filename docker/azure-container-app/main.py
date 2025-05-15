@@ -4,23 +4,25 @@ import json
 app = Flask(__name__)
 
 
-@app.route('/event', methods=['POST'])
+@app.route('/event', methods=['POST', "GET"])
 def handle_event():
     event_data = request.json
-    print("Received Event:", json.dumps(event_data, indent=2))
+    print("Received Event:", str(event_data), str(request.headers))
     return "Event processed", 200
 
 
 @app.route('/', methods=['POST', 'GET'])
 def root():
     event_data = request.get_json()
-    print("Received Event:", str(event_data))
-    return_data = {}
+    print("Received Event:", str(event_data), str(request.headers))
+    return_data = {"root page": "yes"}
     for data in event_data:
         if data.get("eventType") == "Microsoft.EventGrid.SubscriptionValidationEvent":
             return_data["ValidationResponse"] = data.get(
                 "data").get("validationCode")
-    return make_response(jsonify(return_data), 200)
+    resp = make_response(jsonify(return_data), 200)
+    resp.headers["WebHook-Allowed-Origin"] = "*"
+    return resp
 
 
 if __name__ == '__main__':
