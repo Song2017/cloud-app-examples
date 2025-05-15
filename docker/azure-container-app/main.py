@@ -72,7 +72,9 @@ werkzeug_logger.setLevel(logging.DEBUG)  # 只记录错误日志
 def before_request():
     """记录请求开始时间和其他基本信息"""
     request.start_time = time.time()  # 存储请求开始时间到 request 对象
-    logging.info(f"Request started: {request.method} {request.url} {request.get_json()}, {str(vars(request))}")
+    logging.info(f"Request started: {request.method} {request.url} {str(vars(request))}")
+    if request.method == "POST":
+        logging.info(f"Request POST: {request.get_json()}")
 
 
 @app.after_request
