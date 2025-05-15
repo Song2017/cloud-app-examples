@@ -6,7 +6,7 @@ from flask import Flask, request, make_response, jsonify, Response
 app = Flask(__name__)
 # 配置日志格式和输出位置
 logging.basicConfig(
-    filename='access.log',
+    #filename='access.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
