@@ -1,3 +1,5 @@
+import base64
+import copy
 import json
 import logging
 import os
@@ -103,8 +105,15 @@ def root():
     event_data = request.get_json()
     logging.info(f"root message {event_data}")
     return_data = {"msg": "success"}
-    if isinstance(event_data, dict) and event_data.get(
-            "send_message") is True:
+    is_send = isinstance(event_data, dict) and any([event_data.get(
+        "send_message"), event_data.get("subject").startswith(
+        os.getenv("msg_subject") or "device")])
+    if is_send:
+        json_body: dict = copy.deepcopy(wecom_template)
+        json_body["template_card"]["emphasis_content"] = {
+            "title": event_data.get("subject"),
+            "desc": base64.b64decode(event_data.get("data_base64")).decode()
+        }
         send_message()
     resp = make_response(jsonify(return_data), 200)
     resp.headers["WebHook-Allowed-Origin"] = "*"
