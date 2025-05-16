@@ -114,7 +114,7 @@ def root():
             "title": event_data.get("subject"),
             "desc": base64.b64decode(event_data.get("data_base64")).decode()
         }
-        send_message()
+        send_message(json_body)
     resp = make_response(jsonify(return_data), 200)
     resp.headers["WebHook-Allowed-Origin"] = "*"
     return resp
