@@ -1,6 +1,5 @@
 import base64
 import copy
-import functools
 import logging
 import os
 import time
