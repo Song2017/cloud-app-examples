@@ -1,5 +1,6 @@
 import base64
 import copy
+import json
 import logging
 import os
 import time
@@ -7,6 +8,7 @@ import time
 import requests
 from fastapi import FastAPI, Security, HTTPException, Depends, Response, Request
 from fastapi.security.api_key import APIKeyHeader
+from pydantic import BaseModel
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.status import HTTP_403_FORBIDDEN
 import uvicorn
@@ -27,6 +29,7 @@ api_key_in_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 class Util:
     API_KEY = os.getenv("api_key") or "test"  # In production, use environment variables
     WECOM_URL = os.getenv('wecom_webhook')
+    WECOM_URL_DICT = json.loads(os.getenv('wecom_webhooks') or '{}')
     WECOM_TEMPLATE: dict = {
         "msgtype": "template_card",
         "template_card": {
@@ -84,18 +87,24 @@ class Util:
         )
 
     @staticmethod
-    async def send_message(json_body: dict = None):
+    async def send_message(json_body: dict = None, url: str = None):
         # "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=**"
         try:
-            logging.info(f"send_message start: {json_body}")
+            logging.info(f"send_message start: {url}, {json_body}")
+            url = url or Util.WECOM_URL
             json_body = json_body or Util.WECOM_TEMPLATE
-            response = requests.request("POST", Util.WECOM_URL, json=json_body)
+            response = requests.request("POST", url, json=json_body)
             logging.info(f"send_message response: {response.status_code}, {response.text}")
             return "ok"
         except Exception as e:
             err_msg = f"send_message error: {str(e)}"
             logging.error(err_msg)
             return err_msg
+
+
+class LuckyModel(BaseModel):
+    lucky_money_msg: str
+    we_com_group: str
 
 
 class LoggingMiddleware(BaseHTTPMiddleware):
@@ -182,6 +191,28 @@ async def event_endpoint_post(
                 "data_base64") or "Cg==").decode()
         }
         msg_resp = await Util.send_message(json_body)
+    response.headers["WebHook-Allowed-Origin"] = "*"
+    return {"message": msg_resp}
+
+
+@server.post("/lucky", tags=["Lucky"])
+async def lucky_endpoint_post(
+        event_data: LuckyModel, response: Response,
+        api_key: str = Depends(Util.get_api_key)):
+    # send message to wechat
+    msg_resp = "no message sent"
+    if event_data.lucky_money_msg and event_data.we_com_group:
+        json_body: dict = copy.deepcopy(Util.WECOM_TEMPLATE)
+        template_card = json_body["template_card"]
+        template_card["emphasis_content"] = {
+            "title": event_data.get("lucky_money_msg"),
+            "desc": "支付宝口令红包"
+        }
+        template_card["sub_title_text"] = "欢迎参加DBS Open Day！！"
+        template_card["quote_area"]["quote_text"] = "Wayne：抢红包啦~\nBen：-_-！！"
+
+        msg_resp = await Util.send_message(json_body, Util.WECOM_URL_DICT.get(
+            event_data.we_com_group))
     response.headers["WebHook-Allowed-Origin"] = "*"
     return {"message": msg_resp}
 
