@@ -217,11 +217,11 @@ async def lucky_endpoint_post(
         json_body: dict = copy.deepcopy(Util.WECOM_TEMPLATE)
         template_card = json_body["template_card"]
         template_card["emphasis_content"] = {
-            "title": event_data.get("lucky_money_msg"),
+            "title": event_data.lucky_money_msg,
             "desc": "支付宝口令红包"
         }
         template_card["sub_title_text"] = "欢迎参加DBS Open Day！！"
-        template_card["quote_area"]["quote_text"] = "Wayne：抢红包啦~\nBen：-_-！！"
+        template_card["quote_area"]["quote_text"] = "Wayne：抢红包啦~\nBen：Welcome to Open day！！"
 
         msg_resp = await Util.send_message(json_body, Util.WECOM_URL_DICT.get(
             event_data.we_com_group))
