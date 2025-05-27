@@ -7,6 +7,7 @@ import time
 
 import requests
 from fastapi import FastAPI, Security, HTTPException, Depends, Response, Request
+from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.security.api_key import APIKeyHeader
 from pydantic import BaseModel
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -18,7 +19,7 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 
 # Open Day
 # Author: Ben Song
-server = FastAPI(title="Open Day", version="1.0.0")
+server = FastAPI(title="Open Day", version="1.0.0", docs_url=None)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -91,7 +92,7 @@ class Util:
         # "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=**"
         try:
             logging.info(f"send_message start: {url}, {json_body}")
-            url = url or Util.WECOM_URL
+            url = url or Util.WECOM_URL or Util.WECOM_URL_DICT.get("")
             json_body = json_body or Util.WECOM_TEMPLATE
             response = requests.request("POST", url, json=json_body)
             logging.info(f"send_message response: {response.status_code}, {response.text}")
@@ -153,6 +154,17 @@ server.add_middleware(SwaggerAuthMiddleware, api_key=Util.API_KEY)
 @server.get("/", tags=["Test"])
 async def root():
     return {"message": "Welcome to Open Day"}
+
+
+@server.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url=server.openapi_url,
+        title=server.title,
+        swagger_js_url="https://mt-cloud-tool.oss-cn-hangzhou.aliyuncs.com/swagger/swagger-ui-bundle.js",
+        swagger_css_url="https://mt-cloud-tool.oss-cn-hangzhou.aliyuncs.com/swagger/swagger-ui.css",
+        # swagger_favicon_url="/static/swagger-ui/favicon.png"
+    )
 
 
 @server.get("/secured", tags=["Test"])
