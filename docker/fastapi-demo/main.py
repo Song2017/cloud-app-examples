@@ -190,6 +190,7 @@ async def event_endpoint_post(
         api_key: str = Depends(Util.get_api_key)):
     # send message to wechat
     msg_resp = "no message sent"
+    logging.info(f"event_endpoint_post start: {event_data}")
     is_send = isinstance(event_data, dict) and any([
         event_data.get("send_message"),
         event_data.get("subject", "").startswith(
